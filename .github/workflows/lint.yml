@@ -11,7 +11,7 @@ jobs:
     name: Lint YAML
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - uses: ibiqlik/action-yamllint@v3
         with:
           config_file: .yamllint.yml
@@ -21,8 +21,8 @@ jobs:
     name: Lint Markdown
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: DavidAnson/markdownlint-cli2-action@v23
+      - uses: actions/checkout@v6
+      - uses: DavidAnson/markdownlint-cli2-action@v16
         with:
           globs: |
             **/*.md
