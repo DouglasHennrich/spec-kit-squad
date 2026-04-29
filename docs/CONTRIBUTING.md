@@ -46,9 +46,11 @@ spec-kit-squad/
 │   ├── route.md                   # /speckit.squad.route
 │   └── status.md                  # /speckit.squad.status
 ├── docs/                          # Developer docs (not installed with extension)
+│   ├── README.md                  # Developer architecture reference
+│   ├── CONTRIBUTING.md            # ← this file
+│   └── CHANGELOG.md               # Version history
 ├── .github/workflows/             # CI (not installed with extension)
 ├── README.md                      # User-facing docs
-├── CHANGELOG.md                   # Version history
 └── LICENSE
 ```
 
@@ -72,6 +74,6 @@ Releases are automated. When a PR is merged to `main` that changes
 action automatically:
 
 1. Determines the next version from commit messages
-2. Creates a git tag (e.g., `v1.1.0`)
+2. Creates a git tag (e.g., `v0.1.0`)
 3. Updates the version in `extension.yml`
 4. Creates a GitHub Release with auto-generated notes

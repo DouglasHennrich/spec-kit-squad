@@ -1,62 +1,83 @@
-# Squad Bridge — Documentation
+# Squad Bridge — Developer Docs
+
+> **Looking for the user guide?** See the [root README](../README.md) for
+> installation, commands, and configuration.
 
 ## Contents
 
-- [User Guide](../README.md) — Installation, commands, and configuration
-- [Contributing](CONTRIBUTING.md) — How to contribute to this extension
-- [Changelog](../CHANGELOG.md) — Version history
+- [Contributing](CONTRIBUTING.md) — Development setup, commit conventions, PR process
+- [Changelog](CHANGELOG.md) — Version history
+
+---
 
 ## Architecture
 
 The extension is a thin bridge between two tools:
 
 - **[Spec Kit](https://github.com/github/spec-kit)** provides the specification
-  workflow (`/speckit.specify`, `/speckit.tasks`, etc.)
+  workflow (`/speckit.specify`, `/speckit.tasks`, etc.) and owns `.specify/`
 - **[Squad](https://bradygaster.github.io/squad/)** manages a team of AI agents
-  with declared capabilities
+  with declared capabilities and owns `.squad/`
 
-The extension reads Spec Kit artifacts (`.specify/spec.md`, `.specify/tasks.md`)
-and writes Squad artifacts (`.squad/agents/`, `.squad/routing.md`,
-`squad.config.ts`).
-
-## Command Reference
-
-| Command | Trigger | Output |
-|---------|---------|--------|
-| `speckit.squad.init` | Manual, once | `.squad/agents/`, `.squad/routing.md`, `squad.config.ts` |
-| `speckit.squad.generate` | Manual or `after_specify` hook | Updated agent definitions |
-| `speckit.squad.route` | Manual or `after_tasks` hook | Routing table, optional tasks.md annotations |
-| `speckit.squad.status` | Manual | Coverage + utilization report |
-
-## Configuration Reference
-
-Config file: `.specify/extensions/squad/squad-config.yml`  
-Template: `.specify/extensions/squad/squad-config.template.yml` (created on install)
-
-```yaml
-squad:
-  agent_model: "claude-sonnet-4"        # Model for agent generation
-  routing_strategy: "capability-match"  # or "round-robin"
-  squad_root: ".squad"                  # Squad directory path
-  auto_generate: false                  # Auto-run generate on after_specify
-  model_tiers:
-    complex: "claude-opus-4"
-    standard: "claude-sonnet-4"
-    simple: "claude-haiku-3.5"
-  default_capability_level: "proficient"
+```
+Spec Kit artifacts          Squad artifacts
+──────────────────          ───────────────
+.specify/spec.md    ──────► .squad/agents/*.md
+.specify/tasks.md   ──────► .squad/routing.md
+                            squad.config.ts
 ```
 
-## Versioning
+Each command file in `commands/` is a Markdown prompt executed by the Spec Kit
+runtime inside Claude Code. The commands shell out to the `squad` CLI for
+operations that require Squad's agent management.
 
-This extension follows [Semantic Versioning](https://semver.org/):
+## Repository Layout
 
-- **MAJOR** — breaking changes to command behavior or config schema
-- **MINOR** — new commands or hooks
-- **PATCH** — bug fixes, documentation updates
+```
+spec-kit-squad/
+├── extension.yml              # Manifest: commands, hooks, config, dependencies
+├── squad-config.template.yml  # Installed to .specify/extensions/squad/ on add
+├── commands/
+│   ├── init.md                # /speckit.squad.init — first-time bootstrap
+│   ├── generate.md            # /speckit.squad.generate — resync agents to spec
+│   ├── route.md               # /speckit.squad.route — assign tasks to agents
+│   └── status.md              # /speckit.squad.status — health check
+├── docs/                      # Developer docs (excluded from installs)
+│   ├── README.md              # ← you are here
+│   ├── CONTRIBUTING.md        # How to contribute
+│   └── CHANGELOG.md           # Version history
+├── .github/workflows/
+│   ├── release.yml            # Auto-bump semver on changes to commands/ or extension.yml
+│   └── lint.yml               # Lint YAML and Markdown on every push
+├── README.md                  # User-facing docs (installed with extension)
+└── LICENSE
+```
 
-Versions are auto-bumped by CI when `commands/**` or `extension.yml` change.
-Use conventional commits:
+> `.extensionignore` excludes `docs/` and `.github/` so neither folder is
+> installed when a user runs `specify extension add squad`.
 
-- `feat:` → minor bump
-- `fix:` → patch bump
-- `BREAKING CHANGE:` in footer → major bump
+## CI Workflows
+
+### `release.yml` — Semantic Versioning
+
+Triggers on push to `main` when `commands/**`, `extension.yml`, or
+`squad-config.template.yml` change. Uses
+[`mathieudutour/github-tag-action`](https://github.com/mathieudutour/github-tag-action)
+to parse conventional commits and bump the version:
+
+| Commit prefix | Version bump |
+|---------------|-------------|
+| `feat:` | minor |
+| `fix:`, `docs:`, `chore:` | patch |
+| `BREAKING CHANGE:` in footer | major |
+
+The action updates `extension.yml` `version:` field, creates a git tag, and
+publishes a GitHub Release.
+
+### `lint.yml` — YAML + Markdown Linting
+
+Triggers on every push and on pull requests to `main`. Lints all `.yml` files
+with `yamllint` and all `.md` files with `markdownlint-cli2`. Configuration:
+
+- `.yamllint.yml` — relaxed line length, truthy disabled
+- `.markdownlint.json` — MD013 (line length) and MD033 (inline HTML) disabled
