@@ -1,0 +1,15 @@
+# Local config overrides (may contain secrets)
+squad-config.local.yml
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+
+# Node (if SDK is used locally for testing)
+node_modules/
+dist/
+
+# macOS
+.DS_Store
