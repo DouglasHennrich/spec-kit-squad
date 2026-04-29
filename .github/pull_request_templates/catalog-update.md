@@ -1,10 +1,10 @@
-## Extension Update
+# Extension Update
 
 **Extension Name**: Squad Bridge
 **Extension ID**: squad
 **Version**: ${VERSION}
 **Author**: jwill824
-**Repository**: https://github.com/jwill824/spec-kit-squad
+**Repository**: <https://github.com/jwill824/spec-kit-squad>
 
 ### Description
 
@@ -26,7 +26,7 @@ A Spec Kit extension that bootstraps and synchronizes a [Squad](https://bradygas
 
 Updates `version`, `download_url`, and `updated_at` for the `squad` entry in `extensions/catalog.community.json`.
 
-**Release:** https://github.com/jwill824/spec-kit-squad/releases/tag/${TAG}
+**Release:** <https://github.com/jwill824/spec-kit-squad/releases/tag/${TAG}>
 
 ### Additional Notes
 
