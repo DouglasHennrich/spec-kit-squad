@@ -62,6 +62,11 @@ specify extension add squad --dev /path/to/spec-kit-squad
 
 ## Commands
 
+> **Invoking commands by tool:**
+>
+> - **Claude Code / VS Code Copilot:** Type `/speckit.squad.<command>` directly
+> - **GitHub Copilot CLI:** Type `/agents` → select `speckit.squad.<command>` → enter your prompt
+
 ### `/speckit.squad.init`
 
 Bootstrap a Squad team from the current spec. Run this once after your
@@ -157,16 +162,19 @@ Key options:
 # 2. Bootstrap Squad from the spec
 #    /speckit.squad.init
 
-# 3. Generate tasks
+# 3. Create your implementation plan
+#    /speckit.plan
+
+# 4. Generate tasks from the plan
 #    /speckit.tasks
 
-# 4. Route tasks to agents
+# 5. Route tasks to agents
 #    /speckit.squad.route
 
-# 5. Check alignment
+# 6. Check alignment
 #    /speckit.squad.status
 
-# 6. Start working with your squad
+# 7. Start working with your squad
 squad
 ```
 

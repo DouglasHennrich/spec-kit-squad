@@ -82,7 +82,9 @@ $ARGUMENTS
    
    Next steps:
      squad status          — verify your team
-     /speckit.squad.route  — route open tasks to agents
+     /speckit.plan         — create your implementation plan
+     /speckit.tasks        — generate tasks from the plan
+     /speckit.squad.route  — route tasks to agents (after tasks exist)
    ```
 
 ## Notes
