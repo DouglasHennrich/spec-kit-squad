@@ -132,19 +132,18 @@ jobs:
       - name: Open PR
         id: pr
         run: |
+          envsubst < .github/pull_request_templates/catalog-update.md > /tmp/pr-body.md
           pr_url=$(gh pr create \
             --repo github/spec-kit \
             --head jwill824:feat/bump-squad-to-v${{ steps.version.outputs.version }} \
             --base main \
             --title "chore: bump squad extension to v${{ steps.version.outputs.version }}" \
-            --body "Automated version bump for [spec-kit-squad](https://github.com/jwill824/spec-kit-squad) → **v${{ steps.version.outputs.version }}**
-
-          **Release:** https://github.com/jwill824/spec-kit-squad/releases/tag/${{ steps.version.outputs.tag }}
-
-          **Changes:** updates \`version\`, \`download_url\`, and \`updated_at\` in \`extensions/catalog.community.json\`.")
+            --body-file /tmp/pr-body.md)
           echo "url=$pr_url" >> $GITHUB_OUTPUT
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          VERSION: ${{ steps.version.outputs.version }}
+          TAG: ${{ steps.version.outputs.tag }}
 
       - name: Write job summary
         run: |
