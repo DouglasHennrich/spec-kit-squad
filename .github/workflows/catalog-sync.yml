@@ -120,8 +120,8 @@ jobs:
           PYEOF
         env:
           VERSION: ${{ steps.version.outputs.version }}
-          TAG:     ${{ steps.version.outputs.tag }}
-          TODAY:   ${{ steps.version.outputs.date }}
+          TAG: ${{ steps.version.outputs.tag }}
+          TODAY: ${{ steps.version.outputs.date }}
 
       - name: Commit and push
         run: |
