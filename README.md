@@ -180,6 +180,22 @@ squad
 
 ---
 
+## Troubleshooting
+
+**`squad: command not found`**
+Squad CLI is not installed. Run `npm install -g @bradygaster/squad-cli` and verify with `squad --version`.
+
+**`/speckit.squad.init` reports no spec found**
+Run `/speckit.specify` first — the init command reads `.specify/spec.md`.
+
+**Agents not appearing after init**
+Check `.squad/agents/` exists. If the directory is missing, Squad CLI may not have initialized correctly. Try `squad init` manually, then re-run `/speckit.squad.init`.
+
+**Hook fires unexpectedly**
+Both hooks (`after_specify`, `after_tasks`) are optional and will prompt before running. If you want to disable them, remove the `hooks:` section from your local copy of `extension.yml` or set the hook's `optional: false` to always skip the prompt.
+
+---
+
 ## License
 
 MIT
