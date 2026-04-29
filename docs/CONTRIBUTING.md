@@ -19,7 +19,7 @@ specify extension list
 
 # Test a command (in Claude Code)
 # /speckit.squad.status
-```text
+```
 
 ## Commit Convention
 
@@ -36,7 +36,7 @@ next semantic version:
 
 ## File Structure
 
-```text
+```
 spec-kit-squad/
 ├── extension.yml                  # Extension manifest — source of truth
 ├── squad-config.template.yml      # Config template installed with the extension
@@ -52,7 +52,7 @@ spec-kit-squad/
 ├── .github/workflows/             # CI (not installed with extension)
 ├── README.md                      # User-facing docs
 └── LICENSE
-```text
+```
 
 ## Submitting Changes
 
@@ -69,11 +69,14 @@ spec-kit-squad/
 
 ## Release Process
 
-Releases are automated. When a PR is merged to `main` that changes
-`commands/**`, `extension.yml`, or `squad-config.template.yml`, the CI
-action automatically:
+Releases are fully automated via `semantic-release`. When a PR is merged to
+`main`, the CI action automatically:
 
-1. Determines the next version from commit messages
-2. Creates a git tag (e.g., `v0.1.0`)
-3. Updates the version in `extension.yml`
-4. Creates a GitHub Release with auto-generated notes
+1. Analyzes commit messages to determine the next version
+2. Generates release notes from conventional commits
+3. Writes/updates `docs/CHANGELOG.md`
+4. Updates `version:` in `extension.yml`
+5. Commits those files back with `[skip ci]`
+6. Creates a git tag and GitHub Release
+
+> **Requires** a `GH_TOKEN` repo secret (PAT with `repo` scope).

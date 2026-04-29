@@ -19,13 +19,13 @@ The extension is a thin bridge between two tools:
 - **[Squad](https://bradygaster.github.io/squad/)** manages a team of AI agents
   with declared capabilities and owns `.squad/`
 
-```text
+```
 Spec Kit artifacts          Squad artifacts
 ──────────────────          ───────────────
 .specify/spec.md    ──────► .squad/agents/*.md
 .specify/tasks.md   ──────► .squad/routing.md
                             squad.config.ts
-```text
+```
 
 Each command file in `commands/` is a Markdown prompt executed by the Spec Kit
 runtime inside Claude Code. The commands shell out to the `squad` CLI for
@@ -33,7 +33,7 @@ operations that require Squad's agent management.
 
 ## Repository Layout
 
-```text
+```
 spec-kit-squad/
 ├── extension.yml              # Manifest: commands, hooks, config, dependencies
 ├── squad-config.template.yml  # Installed to .specify/extensions/squad/ on add
@@ -51,28 +51,30 @@ spec-kit-squad/
 │   └── lint.yml               # Lint YAML and Markdown on every push
 ├── README.md                  # User-facing docs (installed with extension)
 └── LICENSE
-```text
+```
 
 > `.extensionignore` excludes `docs/` and `.github/` so neither folder is
 > installed when a user runs `specify extension add squad`.
 
 ## CI Workflows
 
-### `release.yml` — Semantic Versioning
+### `release.yml` — Semantic Release
 
-Triggers on push to `main` when `commands/**`, `extension.yml`, or
-`squad-config.template.yml` change. Uses
-[`mathieudutour/github-tag-action`](https://github.com/mathieudutour/github-tag-action)
-to parse conventional commits and bump the version:
+Triggers on every push to `main` (and `workflow_dispatch`). Uses
+[`semantic-release`](https://semantic-release.gitbook.io/) with the following
+plugin pipeline:
 
-| Commit prefix | Version bump |
-|---------------|-------------|
-| `feat:` | minor |
-| `fix:`, `docs:`, `chore:` | patch |
-| `BREAKING CHANGE:` in footer | major |
+1. **`commit-analyzer`** — determines version bump from conventional commits
+2. **`release-notes-generator`** — generates release notes
+3. **`changelog`** — writes/updates `docs/CHANGELOG.md`
+4. **`exec`** — updates `version:` in `extension.yml`
+5. **`git`** — commits `docs/CHANGELOG.md` + `extension.yml` back with `[skip ci]`
+6. **`github`** — creates the GitHub Release
 
-The action updates `extension.yml` `version:` field, creates a git tag, and
-publishes a GitHub Release.
+Config: `.releaserc.json`
+
+> **Requires** a `GH_TOKEN` repository secret (Personal Access Token with
+> `repo` scope) — `GITHUB_TOKEN` cannot push back to the branch.
 
 ### `lint.yml` — YAML + Markdown Linting
 

@@ -26,7 +26,7 @@ $ARGUMENTS
    For each technology domain and concern identified in the spec, determine
    whether an active Squad agent covers it:
 
-   ```text
+   ```
    Domain Coverage
    ──────────────────────────────────────────────
    Domain              Agent                Status
@@ -37,27 +37,27 @@ $ARGUMENTS
    CI/CD / DevOps      (none)               ⚠️ gap
    Mobile (iOS)        mobile-engineer      ⚠️ inactive
    ──────────────────────────────────────────────
-   ```text
+   ```
 
 3. **Check: Tasks vs. routing**
 
    For each task (if `.specify/tasks.md` exists), verify it can be routed
    to an active agent via the current routing rules:
 
-   ```text
+   ```
    Task Routing Coverage
    ─────────────────────────────────────────────────────
    Total tasks        : 12
    Routable tasks     : 10  ✅
    Unroutable tasks   :  2  ⚠️  (run /speckit.squad.route)
    ─────────────────────────────────────────────────────
-   ```text
+   ```
 
 4. **Check: Agent utilization**
 
    List active agents and flag any with no tasks mapped to them:
 
-   ```text
+   ```
    Agent Utilization
    ────────────────────────────────────────
    Agent               Tasks  Status
@@ -67,7 +67,7 @@ $ARGUMENTS
    qa-engineer         3      ✅ active
    data-engineer       0      ⚠️ no tasks assigned
    ────────────────────────────────────────
-   ```text
+   ```
 
 5. **Check: Squad CLI health**
 

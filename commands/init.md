@@ -47,7 +47,7 @@ $ARGUMENTS
 
    ```bash
    squad init
-   ```text
+   ```
 
 6. **Generate agent definitions** — for each identified domain/concern,
    create a Squad agent with:
@@ -71,7 +71,7 @@ $ARGUMENTS
 
 8. **Print a summary**:
 
-   ```text
+   ```
    ✅ Squad initialized
       Agents created : 3
         - backend-engineer   (Node.js/REST API — expert)
@@ -83,7 +83,7 @@ $ARGUMENTS
    Next steps:
      squad status          — verify your team
      /speckit.squad.route  — route open tasks to agents
-   ```text
+   ```
 
 ## Notes
 

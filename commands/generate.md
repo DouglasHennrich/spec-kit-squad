@@ -47,14 +47,14 @@ $ARGUMENTS
 
 9. **Print a diff summary**:
 
-   ```text
+   ```
    Squad agents updated
      ✅ Added   : data-engineer (PostgreSQL/migrations — proficient)
      ✏️  Updated : backend-engineer (added GraphQL capability)
      ⚠️  Inactive: mobile-engineer (no longer in spec — set to inactive)
    
    Routing rules updated: 8 total (2 added, 1 modified)
-   ```text
+   ```
 
 ## Notes
 
