@@ -19,13 +19,13 @@ The extension is a thin bridge between two tools:
 - **[Squad](https://bradygaster.github.io/squad/)** manages a team of AI agents
   with declared capabilities and owns `.squad/`
 
-```
+```text
 Spec Kit artifacts          Squad artifacts
 ──────────────────          ───────────────
 .specify/spec.md    ──────► .squad/agents/*.md
 .specify/tasks.md   ──────► .squad/routing.md
                             squad.config.ts
-```
+```text
 
 Each command file in `commands/` is a Markdown prompt executed by the Spec Kit
 runtime inside Claude Code. The commands shell out to the `squad` CLI for
@@ -33,7 +33,7 @@ operations that require Squad's agent management.
 
 ## Repository Layout
 
-```
+```text
 spec-kit-squad/
 ├── extension.yml              # Manifest: commands, hooks, config, dependencies
 ├── squad-config.template.yml  # Installed to .specify/extensions/squad/ on add
@@ -51,7 +51,7 @@ spec-kit-squad/
 │   └── lint.yml               # Lint YAML and Markdown on every push
 ├── README.md                  # User-facing docs (installed with extension)
 └── LICENSE
-```
+```text
 
 > `.extensionignore` excludes `docs/` and `.github/` so neither folder is
 > installed when a user runs `specify extension add squad`.

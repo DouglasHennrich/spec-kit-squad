@@ -52,7 +52,7 @@ $ARGUMENTS
 
 7. **Output a routing table**:
 
-   ```
+   ```text
    Task Routing Summary
    ─────────────────────────────────────────────────────────────────────
    Task                                  Agent               Tier
@@ -65,7 +65,7 @@ $ARGUMENTS
    Add README and API docs               ⚠️ coordinator      simple
    ─────────────────────────────────────────────────────────────────────
    Routed: 5 / 6   Unrouted (needs review): 1
-   ```
+   ```text
 
 8. **Update `.squad/routing.md`** with any new routing patterns inferred
    from this task batch that aren't already covered.

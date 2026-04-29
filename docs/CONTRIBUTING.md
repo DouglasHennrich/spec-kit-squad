@@ -19,7 +19,7 @@ specify extension list
 
 # Test a command (in Claude Code)
 # /speckit.squad.status
-```
+```text
 
 ## Commit Convention
 
@@ -36,7 +36,7 @@ next semantic version:
 
 ## File Structure
 
-```
+```text
 spec-kit-squad/
 ├── extension.yml                  # Extension manifest — source of truth
 ├── squad-config.template.yml      # Config template installed with the extension
@@ -52,7 +52,7 @@ spec-kit-squad/
 ├── .github/workflows/             # CI (not installed with extension)
 ├── README.md                      # User-facing docs
 └── LICENSE
-```
+```text
 
 ## Submitting Changes
 

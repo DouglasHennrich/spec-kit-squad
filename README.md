@@ -12,7 +12,7 @@ synchronizing an AI agent team directly from your spec.
 
 ## How It Works
 
-```
+```text
 /speckit.specify  →  spec.md
                          │
                   /speckit.squad.init
@@ -26,7 +26,7 @@ synchronizing an AI agent team directly from your spec.
                          │
                          ▼
           Task → Agent assignments + routing.md
-```
+```text
 
 After you specify your project, the extension reads the spec, infers
 technology domains and roles, and generates a Squad team to match. As your
@@ -42,7 +42,7 @@ spec evolves, `generate` keeps the team in sync. When tasks are generated,
 
 ```bash
 npm install -g @bradygaster/squad-cli
-```
+```text
 
 ---
 
@@ -50,13 +50,13 @@ npm install -g @bradygaster/squad-cli
 
 ```bash
 specify extension add squad --from https://github.com/jwill824/spec-kit-squad/archive/refs/tags/v1.0.0.zip
-```
+```text
 
 Or for local development:
 
 ```bash
 specify extension add squad --dev /path/to/spec-kit-squad
-```
+```text
 
 ---
 
@@ -74,9 +74,9 @@ initial `/speckit.specify`.
 - Generates routing rules in `.squad/routing.md`
 - Writes `squad.config.ts` at the project root
 
-```
+```text
 /speckit.squad.init
-```
+```text
 
 ---
 
@@ -86,10 +86,10 @@ Re-generate agent definitions as the spec evolves. Safe to run repeatedly —
 agents are updated in place; removed domains are marked `inactive`, not
 deleted. Also triggered by the `after_specify` hook.
 
-```
+```text
 /speckit.squad.generate
 /speckit.squad.generate frontend   # limit to a specific domain
-```
+```text
 
 ---
 
@@ -98,10 +98,10 @@ deleted. Also triggered by the `after_specify` hook.
 Route open Speckit tasks to Squad agents using capability matching. Also
 triggered by the `after_tasks` hook.
 
-```
+```text
 /speckit.squad.route
 /speckit.squad.route --update-tasks   # annotate tasks.md with assignments
-```
+```text
 
 ---
 
@@ -110,10 +110,10 @@ triggered by the `after_tasks` hook.
 Health check: cross-reference the spec, tasks, and squad to surface coverage
 gaps and idle agents.
 
-```
+```text
 /speckit.squad.status
 /speckit.squad.status --brief   # summary only
-```
+```text
 
 ---
 
@@ -124,7 +124,7 @@ After installation, copy the config template:
 ```bash
 cp .specify/extensions/squad/squad-config.template.yml \
    .specify/extensions/squad/squad-config.yml
-```
+```text
 
 Key options:
 
@@ -168,7 +168,7 @@ Key options:
 
 # 6. Start working with your squad
 squad
-```
+```text
 
 ---
 
