@@ -31,6 +31,24 @@ jobs:
       - name: Install Python dependencies
         run: pip install pyyaml jinja2
 
+      - name: Close stale catalog submission issues
+        env:
+          GH_TOKEN: ${{ secrets.PUBLIC_REPO_TOKEN }}
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          gh issue list \
+            --repo github/spec-kit \
+            --author "@me" \
+            --search "Squad Bridge in:title" \
+            --state open \
+            --json number \
+            --jq '.[].number' | \
+          while read -r number; do
+            gh issue close "$number" \
+              --repo github/spec-kit \
+              --comment "Superseded by v${VERSION}. A new submission issue will be opened shortly."
+          done
+
       - name: File catalog submission issue
         id: issue
         env:
