@@ -1,3 +1,10 @@
+## [1.2.2](https://github.com/jwill824/spec-kit-squad/compare/v1.2.1...v1.2.2) (2026-05-16)
+
+
+### Bug Fixes
+
+* fetch catalog PR template from spec-kit-squad ([#9](https://github.com/jwill824/spec-kit-squad/issues/9)) ([566687c](https://github.com/jwill824/spec-kit-squad/commit/566687c2f50cc60ecb77c38f5b1762b2cf5f6ed0))
+
 ## [1.2.1](https://github.com/jwill824/spec-kit-squad/compare/v1.2.0...v1.2.1) (2026-05-16)
 
 
