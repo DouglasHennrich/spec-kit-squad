@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/jwill824/spec-kit-squad/compare/v1.2.0...v1.2.1) (2026-05-16)
+
+
+### Bug Fixes
+
+* align docs with actual Squad API and Spec Kit structure ([#6](https://github.com/jwill824/spec-kit-squad/issues/6)) ([4c18631](https://github.com/jwill824/spec-kit-squad/commit/4c186318d0b1a677e8c443933e4d63a18b7209e4))
+
 # [1.2.0](https://github.com/jwill824/spec-kit-squad/compare/v1.1.0...v1.2.0) (2026-05-16)
 
 
