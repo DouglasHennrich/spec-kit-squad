@@ -15,8 +15,8 @@ $ARGUMENTS
 ## Steps
 
 1. **Load all artifacts**:
-   - Spec: `.specify/spec.md`
-   - Tasks: `.specify/tasks.md` (if exists)
+   - Spec: `specs/<id>/spec.md`
+   - Tasks: `specs/<id>/tasks.md` (if exists)
    - Squad agents: `.squad/agents/` (if exists)
    - Squad routing: `.squad/routing.md` (if exists)
    - Bridge config: `.specify/extensions/squad/squad-config.yml`
@@ -41,7 +41,7 @@ $ARGUMENTS
 
 3. **Check: Tasks vs. routing**
 
-   For each task (if `.specify/tasks.md` exists), verify it can be routed
+   For each task (if `specs/<id>/tasks.md` exists), verify it can be routed
    to an active agent via the current routing rules:
 
    ```

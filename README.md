@@ -72,7 +72,7 @@ specify extension add squad --dev /path/to/spec-kit-squad
 Bootstrap a Squad team from the current spec. Run this once after your
 initial `/speckit.specify`.
 
-- Reads `.specify/spec.md` and (optionally) `.specify/tasks.md`
+- Reads `specs/<id>/spec.md` and (optionally) `specs/<id>/tasks.md`
 - Infers technology domains, roles, and cross-cutting concerns
 - Runs `squad init` if `.squad/` doesn't exist
 - Creates agent definitions in `.squad/agents/`
@@ -134,7 +134,7 @@ cp .specify/extensions/squad/squad-config.template.yml \
 Key options:
 
 | Option | Default | Description |
-|---|---|---|
+| --- | --- | --- |
 | `agent_model` | `claude-sonnet-4` | Model used when generating agents |
 | `routing_strategy` | `capability-match` | `capability-match` or `round-robin` |
 | `squad_root` | `.squad` | Path to Squad root directory |
@@ -147,7 +147,7 @@ Key options:
 ## Hooks
 
 | Hook | Command | Default |
-|---|---|---|
+| --- | --- | --- |
 | `after_specify` | `speckit.squad.generate` | Optional (prompts user) |
 | `after_tasks` | `speckit.squad.route` | Optional (prompts user) |
 
@@ -186,7 +186,7 @@ squad
 Squad CLI is not installed. Run `npm install -g @bradygaster/squad-cli` and verify with `squad --version`.
 
 **`/speckit.squad.init` reports no spec found**
-Run `/speckit.specify` first — the init command reads `.specify/spec.md`.
+Run `/speckit.specify` first — the init command reads `specs/<id>/spec.md`.
 
 **Agents not appearing after init**
 Check `.squad/agents/` exists. If the directory is missing, Squad CLI may not have initialized correctly. Try `squad init` manually, then re-run `/speckit.squad.init`.

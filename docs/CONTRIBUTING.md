@@ -28,7 +28,7 @@ for automated versioning. The CI action reads commit messages to determine the
 next semantic version:
 
 | Prefix | Version bump | Example |
-|--------|-------------|---------|
+| --- | --- | --- |
 | `feat:` | minor | `feat: add domain filtering to generate` |
 | `fix:` | patch | `fix: handle missing tasks.md gracefully` |
 | `docs:` | patch | `docs: improve route command examples` |

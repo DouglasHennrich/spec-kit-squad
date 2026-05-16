@@ -17,7 +17,7 @@ $ARGUMENTS
 ## Steps
 
 1. **Verify prerequisites**:
-   - `.specify/tasks.md` exists; if not, tell the user to run
+   - `specs/<id>/tasks.md` exists; if not, tell the user to run
      `/speckit.tasks` first and stop.
    - `.squad/` exists; if not, tell the user to run
      `/speckit.squad.init` first and stop.
@@ -25,7 +25,7 @@ $ARGUMENTS
 2. **Load bridge config** from `.specify/extensions/squad/squad-config.yml`
    if it exists, otherwise use extension defaults.
 
-3. **Read open tasks** from `.specify/tasks.md`. Parse each task's title,
+3. **Read open tasks** from `specs/<id>/tasks.md`. Parse each task's title,
    description, and any tags or phase labels.
 
 4. **Load Squad agents** and routing rules from `.squad/` (agents directory
@@ -70,7 +70,7 @@ $ARGUMENTS
 8. **Update `.squad/routing.md`** with any new routing patterns inferred
    from this task batch that aren't already covered.
 
-9. If `$ARGUMENTS` contains `--update-tasks`, annotate `.specify/tasks.md`
+9. If `$ARGUMENTS` contains `--update-tasks`, annotate `specs/<id>/tasks.md`
    with agent assignments as metadata comments (e.g.,
    `<!-- squad:agent=backend-engineer tier=standard -->`).
 

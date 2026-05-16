@@ -28,10 +28,11 @@ $ARGUMENTS
 
 ## Steps
 
-1. **Read the spec** from `.specify/spec.md`. If it doesn't exist, tell the
-   user to run `/speckit.specify` first and stop.
+1. **Read the spec** from the active spec directory under `specs/` (e.g.,
+   `specs/001-<name>/spec.md`). If no spec directory exists, tell the user
+   to run `/speckit.specify` first and stop.
 
-2. **Read tasks** from `.specify/tasks.md` if it exists (used to infer work
+2. **Read tasks** from `specs/<id>/tasks.md` if it exists (used to infer work
    types and routing signals).
 
 3. **Load bridge config** from `.specify/extensions/squad/squad-config.yml`
