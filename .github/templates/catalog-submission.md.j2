@@ -1,0 +1,144 @@
+### Extension ID
+
+{{ ext.extension.id }}
+
+### Extension Name
+
+{{ ext.extension.name }}
+
+### Version
+
+{{ version }}
+
+### Description
+
+{{ ext.extension.description }}
+
+### Author
+
+{{ ext.extension.author }}
+
+### Repository URL
+
+<{{ ext.extension.repository }}>
+
+### Download URL
+
+{{ download_url }}
+
+### License
+
+{{ ext.extension.license }}
+
+### Homepage (optional)
+
+<{{ ext.extension.homepage }}>
+
+### Documentation URL (optional)
+
+<{{ ext.extension.documentation }}>
+
+### Changelog URL (optional)
+
+<{{ ext.extension.changelog }}>
+
+### Required Spec Kit Version
+
+{{ ext.requires.speckit_version }}
+
+### Required Tools (optional)
+
+{% if ext.requires.tools %}
+{% for tool in ext.requires.tools %}
+- {{ tool.name }} {{ tool.version }} ({{ 'required' if tool.required else 'optional' }})
+{% endfor %}
+{% else %}
+None
+{% endif %}
+
+### Number of Commands
+
+{{ ext.provides.commands | length }}
+
+### Number of Hooks (optional)
+
+{{ ext.hooks | length }}
+
+### Tags
+
+{{ ext.tags | join(', ') }}
+
+### Key Features
+
+{% for cmd in ext.provides.commands %}
+- {{ cmd.description }}
+{% endfor %}
+
+### Testing Checklist
+
+- [x] Extension installs successfully via download URL
+- [x] All commands execute without errors
+- [x] Documentation is complete and accurate
+- [x] No security vulnerabilities identified
+- [x] Tested on at least one real project
+
+### Submission Requirements
+
+- [x] Valid `extension.yml` manifest included
+- [x] README.md with installation and usage instructions
+- [x] LICENSE file included
+- [x] GitHub release created with version tag
+- [x] All command files exist and are properly formatted
+- [x] Extension ID follows naming conventions (lowercase-with-hyphens)
+
+### Testing Details
+
+Tested on macOS with Spec Kit {{ ext.requires.speckit_version }}. Commands tested: {% for cmd in ext.provides.commands %}`/{{ cmd.name }}`{% if not loop.last %}, {% endif %}{% endfor %}.
+
+### Example Usage
+
+```bash
+# Install the extension
+specify extension add {{ ext.extension.id }} --from {{ download_url }}
+
+{% for cmd in ext.provides.commands %}
+# /{{ cmd.name }} - {{ cmd.description }}
+{% endfor %}
+```
+
+### Proposed Catalog Entry
+
+```json
+{
+  "{{ ext.extension.id }}": {
+    "name": "{{ ext.extension.name }}",
+    "id": "{{ ext.extension.id }}",
+    "description": "{{ ext.extension.description }}",
+    "author": "{{ ext.extension.author }}",
+    "version": "{{ version }}",
+    "download_url": "{{ download_url }}",
+    "repository": "{{ ext.extension.repository }}",
+    "homepage": "{{ ext.extension.homepage }}",
+    "documentation": "{{ ext.extension.documentation }}",
+    "changelog": "{{ ext.extension.changelog }}",
+    "license": "{{ ext.extension.license }}",
+    "requires": {
+      "speckit_version": "{{ ext.requires.speckit_version }}"
+    },
+    "provides": {
+      "commands": {{ ext.provides.commands | length }},
+      "hooks": {{ ext.hooks | length }}
+    },
+    "tags": {{ ext.tags | tojson }},
+    "verified": false,
+    "downloads": 0,
+    "stars": 0,
+    "created_at": "{{ date }}",
+    "updated_at": "{{ date }}"
+  }
+}
+```
+
+### Additional Context
+
+Automated submission opened by the [catalog-submit workflow]({{ ext.extension.repository }}/actions/workflows/catalog-submit.yml) on release of v{{ version }}. If an entry for `{{ ext.extension.id }}` already exists in the catalog, please treat this as a version update.
