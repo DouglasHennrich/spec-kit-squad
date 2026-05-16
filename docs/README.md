@@ -22,8 +22,9 @@ The extension is a thin bridge between two tools:
 ```
 Spec Kit artifacts          Squad artifacts
 ──────────────────          ───────────────
-specs/<id>/spec.md  ──────► .squad/agents/*.md
+specs/<id>/spec.md  ──────► .squad/agents/{name}/charter.md
 specs/<id>/tasks.md ──────► .squad/routing.md
+                            .squad/team.md
                             squad.config.ts
 ```
 

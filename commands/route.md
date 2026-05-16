@@ -46,9 +46,9 @@ $ARGUMENTS
 
 6. **Determine model tier** for each task:
    - Tasks involving architecture decisions, complex algorithms, or spec
-     interpretation → `complex` tier
+     interpretation → `full` tier
    - Standard feature implementation → `standard` tier
-   - Boilerplate, scaffolding, documentation → `simple` tier
+   - Boilerplate, scaffolding, documentation → `lightweight` tier
 
 7. **Output a routing table**:
 
@@ -57,12 +57,12 @@ $ARGUMENTS
    ─────────────────────────────────────────────────────────────────────
    Task                                  Agent               Tier
    ─────────────────────────────────────────────────────────────────────
-   Design REST API endpoints             backend-engineer    complex
+   Design REST API endpoints             backend-engineer    full
    Implement JWT authentication          backend-engineer    standard
    Build login form component            frontend-engineer   standard
    Write unit tests for auth service     qa-engineer         standard
    Set up GitHub Actions CI pipeline     devops-engineer     standard
-   Add README and API docs               ⚠️ coordinator      simple
+   Add README and API docs               ⚠️ coordinator      lightweight
    ─────────────────────────────────────────────────────────────────────
    Routed: 5 / 6   Unrouted (needs review): 1
    ```

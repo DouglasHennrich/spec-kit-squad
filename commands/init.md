@@ -59,9 +59,10 @@ $ARGUMENTS
    - `model` set to the tier from config that matches the agent's complexity
    - `status: active`
 
-   Write each agent as a `.squad/agents/{name}.agent.md` file following
+   Write each agent as a `.squad/agents/{name}/charter.md` file following
    Squad's format. Also generate or update `squad.config.ts` at the project
-   root using `@bradygaster/squad-sdk`'s `defineConfig()` with all agents,
+   root using `@bradygaster/squad-sdk`'s `defineSquad()` (with `defineTeam()`,
+   `defineAgent()`, and `defineRouting()` sub-builders) covering all agents,
    routing rules, and model tier settings from config.
 
 7. **Generate routing rules** in `.squad/routing.md` that map task keywords
@@ -82,7 +83,7 @@ $ARGUMENTS
       Config         : squad.config.ts
    
    Next steps:
-     squad status          — verify your team
+     squad doctor          — verify your team
      /speckit.plan         — create your implementation plan
      /speckit.tasks        — generate tasks from the plan
      /speckit.squad.route  — route tasks to agents (after tasks exist)

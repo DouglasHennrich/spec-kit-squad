@@ -124,7 +124,10 @@ jobs:
           TODAY: ${{ steps.version.outputs.date }}
 
       - name: Commit and push
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
+          git remote set-url origin https://x-access-token:${GH_TOKEN}@github.com/jwill824/spec-kit.git
           git add extensions/catalog.community.json
           git commit -m "chore: bump squad to v${{ steps.version.outputs.version }}"
           git push origin feat/bump-squad-to-v${{ steps.version.outputs.version }}

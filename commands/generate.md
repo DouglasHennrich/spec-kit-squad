@@ -26,8 +26,9 @@ $ARGUMENTS
 3. **Load bridge config** from `.specify/extensions/squad/squad-config.yml`
    if it exists, otherwise use extension defaults.
 
-4. **Read existing agents** from `.squad/agents/` so changes can be diffed
-   rather than blindly overwritten.
+4. **Read existing agents** from `.squad/agents/` (each agent lives in
+   `.squad/agents/{name}/charter.md`) so changes can be diffed rather than
+   blindly overwritten.
 
 5. **Analyze the spec** to extract technology domains, architectural concerns,
    and cross-cutting roles (same logic as `init`). If `$ARGUMENTS` names a
@@ -40,8 +41,9 @@ $ARGUMENTS
    - **Removed domains** (in existing agents but absent from new spec) →
      set `status: inactive` and note in output (do NOT delete)
 
-7. **Update `squad.config.ts`** at the project root to reflect the new agent
-   set, routing rules, and model tier assignments.
+7. **Update `squad.config.ts`** at the project root (using `defineSquad()` with
+   `defineTeam()`, `defineAgent()`, and `defineRouting()`) to reflect the new
+   agent set, routing rules, and model tier assignments.
 
 8. **Update `.squad/routing.md`** to add routing rules for any new agents and
    update patterns for changed agents.

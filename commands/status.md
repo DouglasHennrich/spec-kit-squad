@@ -17,7 +17,7 @@ $ARGUMENTS
 1. **Load all artifacts**:
    - Spec: `specs/<id>/spec.md`
    - Tasks: `specs/<id>/tasks.md` (if exists)
-   - Squad agents: `.squad/agents/` (if exists)
+   - Squad agents: `.squad/agents/` — each agent in `.squad/agents/{name}/charter.md` (if exists)
    - Squad routing: `.squad/routing.md` (if exists)
    - Bridge config: `.specify/extensions/squad/squad-config.yml`
 
@@ -71,7 +71,7 @@ $ARGUMENTS
 
 5. **Check: Squad CLI health**
 
-   Run `squad status` and include the output summary.
+   Run `squad doctor` and include the output summary.
 
 6. **Print recommended actions** based on the checks above. Examples:
    - "Run `/speckit.squad.generate` — CI/CD domain not covered by any agent"

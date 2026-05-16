@@ -138,9 +138,9 @@ Key options:
 | `agent_model` | `claude-sonnet-4` | Model used when generating agents |
 | `routing_strategy` | `capability-match` | `capability-match` or `round-robin` |
 | `squad_root` | `.squad` | Path to Squad root directory |
-| `model_tiers.complex` | `claude-opus-4` | Model for complex tasks |
+| `model_tiers.full` | `claude-opus-4` | Model for complex tasks |
 | `model_tiers.standard` | `claude-sonnet-4` | Model for standard tasks |
-| `model_tiers.simple` | `claude-haiku-3.5` | Model for simple tasks |
+| `model_tiers.lightweight` | `claude-haiku-4.5` | Model for simple tasks |
 
 ---
 
@@ -175,7 +175,7 @@ Key options:
 #    /speckit.squad.status
 
 # 7. Start working with your squad
-squad
+#    gh copilot  (select Squad as the agent)
 ```
 
 ---
