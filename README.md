@@ -12,20 +12,15 @@ synchronizing an AI agent team directly from your spec.
 
 ## How It Works
 
-```
-/speckit.specify  →  spec.md
-                         │
-                  /speckit.squad.init
-                         │
-                         ▼
-              .squad/ (agents + routing)
-                         │
-/speckit.tasks   →  tasks.md
-                         │
-                  /speckit.squad.route
-                         │
-                         ▼
-          Task → Agent assignments + routing.md
+```mermaid
+flowchart TD
+    A["/speckit.specify"] --> B["specs/&lt;id&gt;/spec.md"]
+    B --> C["/speckit.squad.init"]
+    C --> D[".squad/\nagents + routing"]
+    E["/speckit.tasks"] --> F["specs/&lt;id&gt;/tasks.md"]
+    F --> G["/speckit.squad.route"]
+    D --> H["Task → Agent assignments\n+ routing.md updated"]
+    G --> H
 ```
 
 After you specify your project, the extension reads the spec, infers
@@ -37,8 +32,8 @@ spec evolves, `generate` keeps the team in sync. When tasks are generated,
 
 ## Requirements
 
-- [Spec Kit](https://github.com/github/spec-kit) `>=0.1.0`
-- [Squad CLI](https://bradygaster.github.io/squad/docs/get-started/installation/) `>=0.1.0`
+- [Spec Kit](https://github.com/github/spec-kit) `>=0.8.11`
+- [Squad](https://bradygaster.github.io/squad/) `>=0.9.4`
 
 ```bash
 npm install -g @bradygaster/squad-cli
@@ -155,27 +150,14 @@ Key options:
 
 ## Typical Workflow
 
-```bash
-# 1. Spec the project
-#    /speckit.specify Build a task management API with a React frontend
-
-# 2. Bootstrap Squad from the spec
-#    /speckit.squad.init
-
-# 3. Create your implementation plan
-#    /speckit.plan
-
-# 4. Generate tasks from the plan
-#    /speckit.tasks
-
-# 5. Route tasks to agents
-#    /speckit.squad.route
-
-# 6. Check alignment
-#    /speckit.squad.status
-
-# 7. Start working with your squad
-#    gh copilot  (select Squad as the agent)
+```mermaid
+flowchart LR
+    A["/speckit.specify"] --> B["/speckit.squad.init"]
+    B --> C["/speckit.plan"]
+    C --> D["/speckit.tasks"]
+    D --> E["/speckit.squad.route"]
+    E --> F["/speckit.squad.status"]
+    F --> G["gh copilot\n(run your squad)"]
 ```
 
 ---
@@ -183,7 +165,7 @@ Key options:
 ## Troubleshooting
 
 **`squad: command not found`**
-Squad CLI is not installed. Run `npm install -g @bradygaster/squad-cli` and verify with `squad --version`.
+Squad is not installed. Run `npm install -g @bradygaster/squad-cli` and verify with `squad --version`.
 
 **`/speckit.squad.init` reports no spec found**
 Run `/speckit.specify` first — the init command reads `specs/<id>/spec.md`.

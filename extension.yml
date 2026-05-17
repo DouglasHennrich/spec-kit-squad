@@ -15,8 +15,8 @@ extension:
 requires:
   speckit_version: ">=0.8.11"
   tools:
-    - name: "@bradygaster/squad"
-      version: ">=0.1.0"
+    - name: "@bradygaster/squad-cli"
+      version: ">=0.9.4"
       required: true
   commands:
     - "speckit.specify"

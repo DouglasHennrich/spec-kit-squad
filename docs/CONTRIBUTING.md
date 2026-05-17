@@ -49,7 +49,12 @@ spec-kit-squad/
 │   ├── README.md                  # Developer architecture reference
 │   ├── CONTRIBUTING.md            # ← this file
 │   └── CHANGELOG.md               # Version history
-├── .github/workflows/             # CI (not installed with extension)
+├── .github/
+│   ├── scripts/
+│   │   └── build-catalog-submission.py  # Jinja2 renderer: extension.yml → issue body
+│   ├── templates/
+│   │   └── catalog-submission.md.j2     # Jinja2 template for spec-kit catalog issue
+│   └── workflows/                 # CI (not installed with extension)
 ├── README.md                      # User-facing docs
 └── LICENSE
 ```
@@ -72,6 +77,19 @@ spec-kit-squad/
 Releases are fully automated via `semantic-release`. When a PR is merged to
 `main`, the CI action automatically:
 
+```mermaid
+flowchart TD
+    A["PR merged to main"] --> B["commit-analyzer"]
+    B --> C{"Bump type?"}
+    C -->|"BREAKING CHANGE"| D["major"]
+    C -->|"feat:"| E["minor"]
+    C -->|"fix: / docs:"| F["patch"]
+    D & E & F --> G["Generate release notes\n+ update CHANGELOG.md"]
+    G --> H["Update version in extension.yml"]
+    H --> I["Create git tag\n+ GitHub Release"]
+    I --> J["catalog-submit.yml\nfile issue on github/spec-kit"]
+```
+
 1. Analyzes commit messages to determine the next version
 2. Generates release notes from conventional commits
 3. Writes/updates `docs/CHANGELOG.md`
@@ -79,4 +97,9 @@ Releases are fully automated via `semantic-release`. When a PR is merged to
 5. Commits those files back with `[skip ci]`
 6. Creates a git tag and GitHub Release
 
-> **Requires** a `GH_TOKEN` repo secret (PAT with `repo` scope).
+> **Requires two secrets:**
+>
+> - `GH_TOKEN` — fine-grained PAT with contents/metadata read+write access
+>   (used by semantic-release to push back the changelog and tag commits)
+> - `PUBLIC_REPO_TOKEN` — classic PAT with `public_repo` scope (used by
+>   `catalog-submit.yml` to open issues on `github/spec-kit`)
