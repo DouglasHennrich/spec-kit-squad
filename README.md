@@ -44,7 +44,7 @@ npm install -g @bradygaster/squad-cli
 ## Installation
 
 ```bash
-specify extension add squad --from https://github.com/jwill824/spec-kit-squad/archive/refs/tags/v1.2.2.zip
+specify extension add squad --from https://github.com/jwill824/spec-kit-squad/archive/refs/tags/v1.3.0.zip
 ```
 
 Or for local development:

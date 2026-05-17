@@ -1,3 +1,17 @@
+# [1.3.0](https://github.com/jwill824/spec-kit-squad/compare/v1.2.2...v1.3.0) (2026-05-17)
+
+
+### Bug Fixes
+
+* remove unsettable labels from catalog issue submission ([#10](https://github.com/jwill824/spec-kit-squad/issues/10)) ([6587a77](https://github.com/jwill824/spec-kit-squad/commit/6587a77c98e84a212beada58be7845b9177f4ec7))
+* update catalog issue title format ([#13](https://github.com/jwill824/spec-kit-squad/issues/13)) ([e23073b](https://github.com/jwill824/spec-kit-squad/commit/e23073bd87e29b89e6f43eca5afc889ae6aa8aa7))
+* use PUBLIC_REPO_TOKEN for catalog issue submission ([#12](https://github.com/jwill824/spec-kit-squad/issues/12)) ([df00612](https://github.com/jwill824/spec-kit-squad/commit/df0061202390339d773c243ea091272121b8f157))
+
+
+### Features
+
+* close stale catalog submission issues before creating new one ([#14](https://github.com/jwill824/spec-kit-squad/issues/14)) ([f9bdab8](https://github.com/jwill824/spec-kit-squad/commit/f9bdab8bff653869d4ac74e5ee7da0d1db3997b0))
+
 ## [1.2.2](https://github.com/jwill824/spec-kit-squad/compare/v1.2.1...v1.2.2) (2026-05-16)
 
 
