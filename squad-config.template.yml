@@ -5,7 +5,7 @@
 squad:
   # Model to use when generating agent definitions.
   # Options: claude-opus-4, claude-sonnet-4, claude-haiku-4.5, gpt-4.1, gpt-4.1-mini
-  agent_model: "claude-sonnet-4"
+  agent_model: "claude-opus-4"
 
   # How tasks are routed to agents.
   # "capability-match" - match task keywords to agent capabilities (recommended)
@@ -24,7 +24,7 @@ squad:
   # Tiers match Squad's routing tiers: full, standard, lightweight, direct.
   model_tiers:
     full: "claude-opus-4"
-    standard: "claude-sonnet-4"
+    standard: "claude-sonnet-4.6"
     lightweight: "claude-haiku-4.5"
 
   # Default capability level assigned to generated agents when the spec

@@ -16,17 +16,21 @@ synchronizing an AI agent team directly from your spec.
 flowchart TD
     A["/speckit.specify"] --> B["specs/&lt;id&gt;/spec.md"]
     B --> C["/speckit.squad.init"]
-    C --> D[".squad/\nagents + routing"]
+    C --> D[".squad/\nagents + routing\n+ squad.config.ts"]
+    A -->|"after_specify hook"| GEN["/speckit.squad.generate"]
+    GEN --> D
     E["/speckit.tasks"] --> F["specs/&lt;id&gt;/tasks.md"]
-    F --> G["/speckit.squad.route"]
-    D --> H["Task → Agent assignments\n+ routing.md updated"]
-    G --> H
+    F -->|"after_tasks hook"| AT["/speckit.squad.after-tasks"]
+    D --> AT
+    AT --> H["Task → Agent assignments\n+ routing.md updated"]
+    AT --> I["API.md contract\n(when API tasks detected)"]
 ```
 
 After you specify your project, the extension reads the spec, infers
 technology domains and roles, and generates a Squad team to match. As your
 spec evolves, `generate` keeps the team in sync. When tasks are generated,
-`route` distributes them to the right agents automatically.
+`after-tasks` distributes them to the right agents and prepares API contract
+docs when needed — both triggered automatically via hooks.
 
 ---
 
@@ -44,7 +48,7 @@ npm install -g @bradygaster/squad-cli
 ## Installation
 
 ```bash
-specify extension add squad --from https://github.com/jwill824/spec-kit-squad/archive/refs/tags/v1.3.0.zip
+specify extension add squad --from https://github.com/DouglasHennrich/spec-kit-squad/archive/refs/tags/v2.0.0.zip
 ```
 
 Or for local development:
@@ -105,6 +109,40 @@ triggered by the `after_tasks` hook.
 
 ---
 
+### `/speckit.squad.api-contract`
+
+Analyze open tasks and generate or update an `API.md` contract document when
+tasks include API surface changes (new endpoints, request/response shape
+changes, DTO or OpenAPI updates). Assigns ownership of each endpoint section
+to the responsible Squad agent.
+
+Skips silently when no API-impacting tasks are found — safe to run at any
+time.
+
+```
+/speckit.squad.api-contract
+/speckit.squad.api-contract --output=docs/features/my-feature/API.md
+```
+
+---
+
+### `/speckit.squad.after-tasks`
+
+Orchestrator that runs the full post-task flow in order:
+
+1. `/speckit.squad.route` — assigns agents to every open task
+2. `/speckit.squad.api-contract` — generates API contract docs when needed
+
+This is the command invoked by the `after_tasks` hook. Running it directly is
+equivalent to running both sub-commands in sequence.
+
+```
+/speckit.squad.after-tasks
+/speckit.squad.after-tasks --update-tasks
+```
+
+---
+
 ### `/speckit.squad.status`
 
 Health check: cross-reference the spec, tasks, and squad to surface coverage
@@ -137,14 +175,45 @@ Key options:
 | `model_tiers.standard` | `claude-sonnet-4` | Model for standard tasks |
 | `model_tiers.lightweight` | `claude-haiku-4.5` | Model for simple tasks |
 
+### `squad.config.ts`
+
+`/speckit.squad.init` generates a `squad.config.ts` at the project root using
+`defineSquad()` from `@bradygaster/squad-sdk`. It encodes the full agent
+roster, routing rules, and model tier assignments derived from your spec.
+
+`/speckit.squad.generate` keeps it in sync as the spec evolves — adding new
+agents, updating capabilities, and reflecting model tier changes. You can
+edit this file manually; `generate` will diff against the existing content
+rather than blindly overwriting it.
+
+---
+
+## Skills
+
+Both `/speckit.squad.init` and `/speckit.squad.generate` automatically install
+the following skill into your project's `.github/skills/` directory:
+
+### `speckit-implement-squad-route`
+
+Overrides the default `/speckit.implement` behavior so that tasks are
+distributed to specialized Squad agents **in parallel** instead of being
+executed sequentially by a single agent.
+
+At runtime the skill reads the `→AgentName` annotations written by
+`/speckit.squad.route` into `tasks.md` and groups tasks by agent before
+dispatching them.
+
+**Installation is idempotent** — if the file already exists in your project
+(e.g. you've customized it), `init` and `generate` will never overwrite it.
+
 ---
 
 ## Hooks
 
-| Hook | Command | Default |
+| Hook | Command | Behavior |
 | --- | --- | --- |
-| `after_specify` | `speckit.squad.generate` | Optional (prompts user) |
-| `after_tasks` | `speckit.squad.route` | Optional (prompts user) |
+| `after_specify` | `speckit.squad.generate` | Always runs (prompts before executing) |
+| `after_tasks` | `speckit.squad.after-tasks` | Always runs (prompts before executing) |
 
 ---
 
@@ -152,13 +221,19 @@ Key options:
 
 ```mermaid
 flowchart LR
-    A["/speckit.specify"] --> B["/speckit.squad.init"]
-    B --> C["/speckit.plan"]
+    A["/speckit.specify"] -->|"hook: after_specify\n(auto-prompt)"| B["/speckit.squad.generate"]
+    A --> A2["/speckit.squad.init\n(first time only)"]
+    A2 --> C["/speckit.plan"]
+    B --> C
     C --> D["/speckit.tasks"]
-    D --> E["/speckit.squad.route"]
+    D -->|"hook: after_tasks\n(auto-prompt)"| E["/speckit.squad.after-tasks\n(route + api-contract)"]
     E --> F["/speckit.squad.status"]
     F --> G["gh copilot\n(run your squad)"]
 ```
+
+Steps marked **auto-prompt** run automatically via hooks — you confirm before
+they execute. You only need to invoke `/speckit.squad.init` manually once,
+on first setup.
 
 ---
 
@@ -173,8 +248,11 @@ Run `/speckit.specify` first — the init command reads `specs/<id>/spec.md`.
 **Agents not appearing after init**
 Check `.squad/agents/` exists. If the directory is missing, Squad CLI may not have initialized correctly. Try `squad init` manually, then re-run `/speckit.squad.init`.
 
+**Hook fires but `API.md` is not generated**
+`/speckit.squad.after-tasks` only creates `API.md` when it detects tasks with explicit API surface changes (new endpoints, request/response shape changes, DTO or OpenAPI updates). If no such tasks are found, it exits cleanly with no file changes — this is expected behavior, not a bug.
+
 **Hook fires unexpectedly**
-Both hooks (`after_specify`, `after_tasks`) are optional and will prompt before running. If you want to disable them, remove the `hooks:` section from your local copy of `extension.yml` or set the hook's `optional: false` to always skip the prompt.
+Both hooks (`after_specify`, `after_tasks`) always run with a confirmation prompt — they cannot be silenced by setting `optional`. To disable a hook entirely, remove its entry from the `hooks:` section in your local copy of `.specify/extensions/squad/extension.yml`.
 
 ---
 

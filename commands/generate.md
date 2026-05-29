@@ -48,7 +48,74 @@ $ARGUMENTS
 8. **Update `.squad/routing.md`** to add routing rules for any new agents and
    update patterns for changed agents.
 
-9. **Print a diff summary**:
+9. **Install Squad skills if missing** — for each skill below, check if the
+   target file already exists. If it does **not** exist, create the directory
+   and copy the file from the extension's installed path. Skip silently if
+   already present.
+
+   | Skill | Source | Target |
+   |-------|--------|--------|
+   | `speckit-implement-squad-route` | `.specify/extensions/squad/skills/speckit-implement-squad-route/SKILL.md` | `.github/skills/speckit-implement-squad-route/SKILL.md` |
+
+   **`speckit-implement-squad-route`:** copy from the extension bundle if target does not exist; skip silently if already present.
+
+   **`grill-with-docs`:** fetched from the official repository so the project
+   always receives the latest version. If the target directory does not already
+   exist, create `.github/skills/grill-with-docs/` and download each file with
+   `curl -fsSL <url> -o <target>`, falling back to the bundled copy in
+   `.specify/extensions/squad/skills/grill-with-docs/<file>` if `curl` fails.
+
+   | File | Official URL |
+   |------|--------------|
+   | `SKILL.md` | `https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/grill-with-docs/SKILL.md` |
+   | `CONTEXT-FORMAT.md` | `https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/grill-with-docs/CONTEXT-FORMAT.md` |
+   | `ADR-FORMAT.md` | `https://raw.githubusercontent.com/mattpocock/skills/main/skills/engineering/grill-with-docs/ADR-FORMAT.md` |
+
+   If the target directory already exists, skip the entire block.
+
+   Print `✅ Skill installed (latest): {target}` for each newly installed skill (or `✅ Skill installed (bundled): {target}` when curl fallback was used).
+
+10. **Install `list-hooks.sh`** — copy
+    `.specify/extensions/squad/scripts/bash/list-hooks.sh` to
+    `.specify/scripts/bash/list-hooks.sh` and make it executable (`chmod +x`).
+    Overwrite if it already exists (always keep the latest version from the
+    extension bundle).
+
+    Print: `✅ Script installed: .specify/scripts/bash/list-hooks.sh`
+
+11. **Bootstrap `.specify/extensions.yml`** — open the file and check the first
+    line for the sentinel `# squad-managed: true`.
+
+    - **Sentinel absent** → overwrite the entire file with the contents of
+      `.specify/extensions/squad/templates/extensions.yml`. Print:
+      `✅ extensions.yml bootstrapped with Squad hooks`
+    - **Sentinel present** → skip silently.
+
+12. **Update `.github/copilot-instructions.md`** — create the file if it does
+    not exist. Apply the two Squad blocks using their HTML comment markers as
+    boundaries (replace if found, append if not):
+    `<!-- SQUAD OVERRIDES -->` … `<!-- END SQUAD OVERRIDES -->` and
+    `<!-- SPECKIT HOOKS -->` … `<!-- END SPECKIT HOOKS -->`.
+
+    Use the same verbatim block contents as defined in `speckit.squad.init` step 12.
+
+    Print: `✅ .github/copilot-instructions.md updated with Squad blocks`
+
+13. **Bootstrap `.squad/ceremonies.md`** — open the file and check whether it
+    already contains the heading `## Speckit Tasks Audit`.
+
+    - **Heading absent** → append the contents of
+      `.specify/extensions/squad/templates/ceremonies-tasks-auditor.md` to the
+      end of the file. Print:
+      `✅ ceremonies.md patched with Speckit Tasks Audit ceremony`
+    - **Heading present** → skip silently. Print:
+      `ℹ️  ceremonies.md already contains Speckit Tasks Audit — skipping`
+
+    If `.squad/ceremonies.md` does not exist (e.g., user deleted it), create it
+    and write the template content. Print:
+    `✅ ceremonies.md created with Speckit Tasks Audit ceremony`
+
+14. **Print a diff summary**:
 
    ```
    Squad agents updated
