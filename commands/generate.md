@@ -41,9 +41,10 @@ $ARGUMENTS
    - **Removed domains** (in existing agents but absent from new spec) →
      set `status: inactive` and note in output (do NOT delete)
 
-7. **Update `squad.config.ts`** at the project root (using `defineSquad()` with
-   `defineTeam()`, `defineAgent()`, and `defineRouting()`) to reflect the new
-   agent set, routing rules, and model tier assignments.
+7. **Update `.squad/team.md` and `.squad/routing.md`** to reflect the new
+   agent set, routing rules, and model tier assignments. In markdown-first mode,
+   keep the root `.squad` artifacts authoritative and do not require a
+   `squad.config.ts` file.
 
 8. **Update `.squad/routing.md`** to add routing rules for any new agents and
    update patterns for changed agents.

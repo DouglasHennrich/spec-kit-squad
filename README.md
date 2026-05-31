@@ -16,7 +16,7 @@ synchronizing an AI agent team directly from your spec.
 flowchart TD
     A["/speckit.specify"] --> B["specs/&lt;id&gt;/spec.md"]
     B --> C["/speckit.squad.init"]
-    C --> D[".squad/\nagents + routing\n+ squad.config.ts"]
+    C --> D[".squad/\nagents + routing\n(markdown-first)"]
     A -->|"after_specify hook"| GEN["/speckit.squad.generate"]
     GEN --> D
     E["/speckit.tasks"] --> F["specs/&lt;id&gt;/tasks.md"]
@@ -76,7 +76,7 @@ initial `/speckit.specify`.
 - Runs `squad init` if `.squad/` doesn't exist
 - Creates agent definitions in `.squad/agents/`
 - Generates routing rules in `.squad/routing.md`
-- Writes `squad.config.ts` at the project root
+- Uses markdown-first `.squad/` artifacts; no root `squad.config.ts` file is required
 
 ```
 /speckit.squad.init
@@ -175,16 +175,18 @@ Key options:
 | `model_tiers.standard` | `claude-sonnet-4` | Model for standard tasks |
 | `model_tiers.lightweight` | `claude-haiku-4.5` | Model for simple tasks |
 
-### `squad.config.ts`
+### Markdown-First Workflow
 
-`/speckit.squad.init` generates a `squad.config.ts` at the project root using
-`defineSquad()` from `@bradygaster/squad-sdk`. It encodes the full agent
-roster, routing rules, and model tier assignments derived from your spec.
+`/speckit.squad.init` bootstraps your Squad `.squad/` directory with agent
+charters, `team.md`, and `routing.md`. These markdown artifacts are the
+authoritative source of truth.
 
-`/speckit.squad.generate` keeps it in sync as the spec evolves — adding new
-agents, updating capabilities, and reflecting model tier changes. You can
-edit this file manually; `generate` will diff against the existing content
-rather than blindly overwriting it.
+`/speckit.squad.generate` keeps `.squad/` artifacts in sync as the spec evolves
+— adding new agents, updating capabilities, and reflecting model tier
+changes. You can edit these files manually; `generate` will diff against the
+existing content rather than blindly overwriting it.
+
+In markdown-first mode, no root `squad.config.ts` file is required.
 
 ---
 
