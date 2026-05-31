@@ -3,7 +3,7 @@ schema_version: "1.0"
 extension:
   id: "squad"
   name: "Squad Bridge (modified by Douglas Hennrich)"
-  version: "2.0.0"
+  version: "2.1.0"
   description: "Bootstrap and synchronize a Squad agent team from your Speckit spec and tasks."
   author: "Douglas Hennrich"
   repository: "https://github.com/DouglasHennrich/spec-kit-squad"

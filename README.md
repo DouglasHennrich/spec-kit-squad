@@ -48,7 +48,7 @@ npm install -g @bradygaster/squad-cli
 ## Installation
 
 ```bash
-specify extension add squad --from https://github.com/DouglasHennrich/spec-kit-squad/archive/refs/tags/v2.0.0.zip
+specify extension add squad --from https://github.com/DouglasHennrich/spec-kit-squad/archive/refs/tags/v2.1.0.zip
 ```
 
 Or for local development:
@@ -76,7 +76,7 @@ initial `/speckit.specify`.
 - Runs `squad init` if `.squad/` doesn't exist
 - Creates agent definitions in `.squad/agents/`
 - Generates routing rules in `.squad/routing.md`
-- Uses markdown-first `.squad/` artifacts; no root `squad.config.ts` file is required
+- Uses markdown-first `.squad/` artifacts and definitions in `.squad/agents/`, `team.md`, and `routing.md`; no root `squad.config.ts` file is required
 
 ```
 /speckit.squad.init

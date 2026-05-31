@@ -1,5 +1,10 @@
 # Changelog
 
+## [2.1.0] - 2026-05-31
+
+### Changed
+- Squad definitions are now markdown-first and authoritative in `.squad/` artifacts (`agents/`, `team.md`, `routing.md`); a root `squad.config.ts` file is no longer required.
+
 ## [2.0.0] - 2026-05-29
 
 ### Added
